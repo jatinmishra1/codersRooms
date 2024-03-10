@@ -1,10 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import Phone from "./Phone/Phone";
+import Email from "./Email/Email";
+import styles from "./StepPhoneEmail.module.css";
+
+const phoneEmailMap = {
+  phone: Phone,
+  email: Email,
+};
 
 function StepPhoneEmail({ onNext }) {
+  const [type, setType] = useState("phone");
+
+  const Component = phoneEmailMap[type];
   return (
     <>
-      <div>phone email comp</div>
-      <button onClick={onNext}>Next</button>
+      <div className={styles.cardWrapper}>
+        <div>
+          <div className={styles.buttonWrap}>
+            <button
+              className={`${styles.tabButton} ${
+                type === "phone" ? styles.active : ""
+              }`}
+              onClick={() => {
+                setType("phone");
+              }}
+            >
+              <img src="/images/Phone.png" alt="phone" />
+            </button>
+            <button
+              className={`${styles.tabButton} ${
+                type === "email" ? styles.active : ""
+              }`}
+              onClick={() => {
+                setType("email");
+              }}
+            >
+              <img src="/images/Email.png" alt="phone" />
+            </button>
+          </div>
+          <Component onNext={onNext} />
+        </div>
+      </div>
     </>
   );
 }

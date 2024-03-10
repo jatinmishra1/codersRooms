@@ -14,7 +14,7 @@ function Home() {
   const navigate = useNavigate();
   function startRegister() {
     console.log("button clicked");
-    navigate("/register");
+    navigate("/authenticate");
   }
 
   return (
@@ -31,7 +31,7 @@ function Home() {
             <span>Get your Username</span>
             <img src="/images/arrow-frwd.png" alt="arrow" />
           </button> */}
-          <Button onClick={startRegister} text="Get your Username"></Button>
+          <Button onClick={startRegister} text="Lets Go"></Button>
         </div>
         <div className={styles.signinWrapper}>
           <span className={styles.hasInvite}>Have an invite text?</span>
