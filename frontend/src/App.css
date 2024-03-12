@@ -37,3 +37,9 @@ body {
   max-width: 90%;
   margin: 0 auto;
 }
+
+.cardWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

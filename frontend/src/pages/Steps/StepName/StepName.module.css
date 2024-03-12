@@ -1,0 +1,15 @@
+.bottomPara {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.actionButtonWrap {
+  margin-top: 40px;
+}
+
+.paragraph {
+  width: 70%;
+  text-align: center;
+  margin: 20px auto;
+}

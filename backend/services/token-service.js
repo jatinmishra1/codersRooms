@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const refreshModal = require("../modals/refreshModal");
 const accessTokenSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
 const refreshTokenSecret = process.env.JWT_REFRESH_TOKEN_SECRET;
 
@@ -11,6 +12,21 @@ class TokenService {
       expiresIn: "1y",
     });
     return { accessToken, refreshToken };
+  }
+
+  async storeRefreshToken(token, userId) {
+    try {
+      await refreshModal.create({
+        token,
+        userId,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async verifyAccessToken(token) {
+    return jwt.verify(token, accessTokenSecret);
   }
 }
 
