@@ -12,7 +12,7 @@ class ActivateController {
     //image base64 conversion
 
     const buffer = Buffer.from(
-      avatar.replace(/^data:image\/png;base64,/, ""),
+      avatar.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
       "base64"
     );
     const imagePath = `${Date.now()}-${Math.round(Math.random() * 1e9)}.png`;
@@ -28,8 +28,10 @@ class ActivateController {
     }
 
     //update user
+    const userId = req.user._id;
+
     try {
-      const user = await userService.findUser({ _id: req.user._id });
+      const user = await userService.findUser({ _id: userId });
       if (!user) {
         res.status(400).json({ message: "user not found" });
       }

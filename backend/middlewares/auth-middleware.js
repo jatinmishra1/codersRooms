@@ -12,10 +12,9 @@ module.exports = async function (req, res, next) {
     }
     req.user = userData;
     console.log(userData);
+    next();
   } catch (e) {
-    res.status(400).json({ message: "invalid token in auth middle" });
+    res.status(401).json({ message: "invalid token in auth middle" });
     console.log(e);
   }
-
-  next();
 };

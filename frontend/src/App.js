@@ -13,10 +13,13 @@ import Navigation from "./components/shared/Navigation/Navigation";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import Authenticate from "./pages/Authenticate/Authenticate";
-import { Children } from "react";
+import { Children, useState } from "react";
 import Activate from "./pages/Activate/Activate";
 import Room from "./pages/Room/Room";
 import { UseSelector, useSelector } from "react-redux";
+import { useLoadingWithRefresh } from "./hooks/useLoadingWithRefresh";
+import Loader from "./components/shared/Loader/Loader";
+
 // const isAuth = !true;
 // const user = {
 //   activated: !true,
@@ -56,7 +59,12 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  return (
+  //call refresh endpoint
+
+  const { loading } = useLoadingWithRefresh();
+  return loading ? (
+    <Loader message="loading please wait " />
+  ) : (
     <div className="App">
       <BrowserRouter>
         <Navigation />
