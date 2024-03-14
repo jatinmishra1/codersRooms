@@ -40,7 +40,7 @@ function Navigation() {
           <Link>
             <img
               className={styles.avatar}
-              src={user.avatar}
+              src={user.avatar ? user.avatar : "/images/emoji.png"}
               width="40px"
               height="40px"
               alt="prfileImg"

@@ -9,6 +9,7 @@
   align-items: center;
   position: relative;
   margin: 20px 0;
+  margin-top: 20px;
 }
 
 .avatars img {
@@ -55,4 +56,11 @@
 .peopleCount img {
   height: 20px;
   width: 20px;
+}
+.singleSpeaker .avatars img {
+  position: initial;
+}
+
+.singleSpeaker .names {
+  margin-left: 20px;
 }

@@ -7,9 +7,13 @@ import { setAvatar } from "../../../store/activateSlice";
 import { activate } from "../../../http";
 import { setAuth } from "../../../store/authSlice";
 import Loader from "../../../components/shared/Loader/Loader";
+import { useNavigate } from "react-router-dom";
 function StepAvatar({ onNext }) {
+  const navigate = useNavigate();
   const { name, avatar } = useSelector((state) => state.activate);
   const [unMounted, setUnMounted] = useState(false);
+  const [image, setImage] = useState("/images/man2.png");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   function captureImage(e) {
     const file = e.target.files[0];
@@ -28,9 +32,8 @@ function StepAvatar({ onNext }) {
       console.log("here  is the name and avatar ", name, avatar);
       const { data } = await activate({ name, avatar });
       if (data.auth) {
-        if (!unMounted) {
-          dispatch(setAuth(data));
-        }
+        dispatch(setAuth(data));
+        // navigate("/rooms");
       }
       console.log(data);
     } catch (e) {
@@ -39,14 +42,12 @@ function StepAvatar({ onNext }) {
       setLoading(false);
     }
   }
-  useEffect(() => {
-    return () => {
-      setUnMounted(true);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     setUnMounted(true);
+  //   };
+  // }, []);
 
-  const [image, setImage] = useState("/images/man2.png");
-  const [loading, setLoading] = useState(false);
   if (loading) {
     return <Loader message="Activation in Progress" />;
   }
