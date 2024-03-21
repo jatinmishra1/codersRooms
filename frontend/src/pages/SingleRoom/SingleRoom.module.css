@@ -36,6 +36,8 @@
   color: #fff;
   font-size: 16px;
   position: relative;
+  outline: none;
+  border: none;
 }
 
 .goBack span::after {
@@ -61,6 +63,11 @@
 .topic {
   font-size: 18px;
   font-weight: bold;
+}
+.container {
+  width: 1200px;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .clientsList {
