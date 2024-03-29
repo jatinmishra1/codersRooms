@@ -23,6 +23,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use("/storage", express.static("storage"));
 DbConnect();
 app.use(express.json({ limit: "8mb" }));
 //all api from router routes registerd here
@@ -45,7 +46,7 @@ io.on("connection", (socket) => {
     socketUserMapping[socket.id] = user;
     //io.sockets.adapter.room    --->so this basically a map
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
-    console.log(clients);
+    console.log("here are the clients", clients);
     clients.forEach((clientId) => {
       io.to(clientId).emit(ACTIONS.ADD_PEER, {
         peerId: socket.id,
@@ -75,6 +76,23 @@ io.on("connection", (socket) => {
       sessionDescription,
     });
   });
+
+  //handle mute unmute
+  socket.on(ACTIONS.MUTE, ({ roomId, userId }) => {
+    // console.log("handling mute", roomId, userId);
+    const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+    clients.forEach((clientId) => {
+      io.to(clientId).emit(ACTIONS.MUTE, { peerId: socket.id, userId });
+    });
+  });
+  socket.on(ACTIONS.UN_MUTE, ({ roomId, userId }) => {
+    // console.log("handling unmute", roomId, userId);
+    const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+    clients.forEach((clientId) => {
+      io.to(clientId).emit(ACTIONS.UN_MUTE, { peerId: socket.id, userId });
+    });
+  });
+
   //leaving the room
 
   const leaveRoom = ({ roomId }) => {

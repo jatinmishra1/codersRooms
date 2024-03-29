@@ -1,7 +1,11 @@
 const Jimp = require("jimp");
 const path = require("path");
+const multer = require("multer");
 const userService = require("../services/user-service");
 const UserDto = require("../dtos/user-dto");
+const upload = multer({
+  dest: "../upload/images",
+});
 class ActivateController {
   async activate(req, res) {
     const { name, avatar } = req.body;
@@ -22,6 +26,7 @@ class ActivateController {
       Jimpres.resize(150, Jimp.AUTO).write(
         path.resolve(__dirname, `../storage/${imagePath}`)
       );
+      console.log("image uploaded success");
     } catch (e) {
       console.log(e);
       res.status(500).json({ message: "could not process the image" });

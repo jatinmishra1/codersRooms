@@ -10,9 +10,21 @@ function SingleRoom() {
   const user = useSelector((state) => state.auth.user);
   console.log("user here in single room", user);
   const { id: roomId } = useParams();
-  const { clients, provideRef } = useWebRTC(roomId, user);
+  const { clients, provideRef, handleMute } = useWebRTC(roomId, user);
   const navigate = useNavigate();
   const [room, setRoom] = useState(null);
+  const [isMute, setMute] = useState(true);
+
+  const handleMuteClick = (clientId) => {
+    if (clientId !== user.id) {
+      return;
+    }
+    setMute((prev) => !prev);
+  };
+  useEffect(() => {
+    handleMute(isMute, user.id);
+  }, [isMute]);
+
   function handleManualLeave() {
     navigate("/rooms");
   }
@@ -65,9 +77,15 @@ function SingleRoom() {
                     src={client.avatar}
                     alt="user profile"
                   />
-                  <button className={styles.micBtn}>
-                    <img src="/images/mic.png" alt="min-image" />
-                    {/* <img src="/images/mic-off.png" alt="min-image" /> */}
+                  <button
+                    onClick={() => handleMuteClick(client.id)}
+                    className={styles.micBtn}
+                  >
+                    {client.muted ? (
+                      <img src="/images/mic-off.png" alt="min-image" />
+                    ) : (
+                      <img src="/images/mic.png" alt="min-image" />
+                    )}
                   </button>
                   <h4>{client.name}</h4>
                 </div>
